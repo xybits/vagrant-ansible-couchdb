@@ -17,11 +17,23 @@ BOXES = {
 }
 
 INSTANCES  = {
-  :server1 => {
-    :private_ip => '10.233.89.101',
+  :couchdb01 => {
+    :private_ip => '10.13.133.101',
+    :roles_path => 'ansible-roles/',
+    :inventory  => 'ansible-data/inventories/cluster/hosts.yml',
+    :playbook   => 'ansible-data/playbooks/cluster/databases.yml',
   },
-  :server2 => {
-    :private_ip => '10.233.89.102',
+  :couchdb02 => {
+    :private_ip => '10.13.133.102',
+    :roles_path => 'ansible-roles/',
+    :inventory  => 'ansible-data/inventories/cluster/hosts.yml',
+    :playbook   => 'ansible-data/playbooks/cluster/databases.yml',
+  },
+  :couchdb03 => {
+    :private_ip => '10.13.133.103',
+    :roles_path => 'ansible-roles/',
+    :inventory  => 'ansible-data/inventories/cluster/hosts.yml',
+    :playbook   => 'ansible-data/playbooks/cluster/databases.yml',
   },
 }
 
@@ -35,7 +47,7 @@ Vagrant.configure("2") do |config|
   config.vbguest.auto_update = false
 
   servers.each do |name, machine|
-    config.vm.define name, autostart: false do |node|
+    config.vm.define name, autostart: true do |node|
       full_name = "#{name}".gsub(/_/, "-") + "." + DOMAIN_NAME
 
       node.vm.box      = machine[:box_name]
@@ -51,6 +63,15 @@ Vagrant.configure("2") do |config|
         vb.name   = full_name
         vb.memory = machine[:memory]
         vb.cpus   = machine[:cpus]
+      end
+
+      # Provision
+      node.vm.provision "ansible" do |ans|
+        ans.verbose  = "vv"
+        ans.limit    = machine[:private_ip]
+        ans.playbook = machine[:playbook]
+        ans.inventory_path    = machine[:inventory]
+        ans.galaxy_roles_path = machine[:roles_path]
       end
     end
   end

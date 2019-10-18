@@ -1,0 +1,23 @@
+---
+
+- name: CouchDB YUM repository
+  include_tasks: yum_repo.yml
+
+- name: CouchDB install
+  include_tasks: install.yml
+
+- name: CouchDB configuration
+  include_tasks: config.yml
+
+- name: CouchDB users
+  include_tasks: users.yml
+
+- name: CouchDB services
+  include_tasks: services.yml
+
+- name: CouchDB startup
+  include_tasks: startup.yml
+
+- name: Firewall rules
+  include_tasks: firewall.yml
+

@@ -5,6 +5,9 @@
 # Vagrant stuff
 .vagrant/
 
+# Python stuff
+*.pyc
+
 # IDE junk
 .idea/
 *.iml

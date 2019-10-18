@@ -1,0 +1,17 @@
+---
+
+# - CouchDB VM Args -
+couchdb_cookie: C0uchd8c1u5teR0fE
+
+# - CouchDB Configuration -
+couchdb_httpd_auth_secret: "220c967fb013abf4aa884bd4b636cc27"
+
+# - CouchDB Data -
+couchdb_admin:
+  user: admin
+  pass: admin123
+
+# - CouchDB Cluster -
+couchdb_cluster_nodes: [ "10.13.133.101", "10.13.133.102", "10.13.133.103" ]
+couchdb_coordination_node: "{{ couchdb_cluster_nodes | last }}"
+

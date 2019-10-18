@@ -1,0 +1,8 @@
+{
+    "action"     : "add_node"
+  , "username"   : "{{ couchdb_admin.user }}"
+  , "password"   : "{{ couchdb_admin.pass | default( couchdb_admin.user ) }}"
+  , "host"       : "{{ couchdb_node_remote_host }}"
+  , "port"       : 5984
+  , "singlenode" : false
+}

@@ -1,0 +1,28 @@
+---
+
+- name: system_databases > CouchDB check
+  uri:
+    url: "http://{{ inventory_hostname }}:5984/{{ couchdb_sysdb }}"
+    method: GET
+    headers:
+      Content-Type: "application/json"
+    force_basic_auth: yes
+    user: "{{ couchdb_admin.user }}"
+    password: "{{ couchdb_admin.pass }}"
+    status_code: 200,404
+    timeout: 10
+  register: couchdb_system_database
+
+- name: startup > CouchDB create
+  uri:
+    url: "http://{{ inventory_hostname }}:5984/{{ couchdb_sysdb }}"
+    method: PUT
+    headers:
+      Content-Type: "application/json"
+    force_basic_auth: yes
+    user: "{{ couchdb_admin.user }}"
+    password: "{{ couchdb_admin.pass }}"
+    status_code: 201
+    timeout: 10
+  when: couchdb_system_database.status == 404
+

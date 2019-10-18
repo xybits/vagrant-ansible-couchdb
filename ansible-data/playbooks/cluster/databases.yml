@@ -1,0 +1,8 @@
+---
+
+- hosts: dbservers
+  become: true
+  roles:
+    - role: ansible-role-couchdb
+    - role: ansible-role-couchdb-cluster
+

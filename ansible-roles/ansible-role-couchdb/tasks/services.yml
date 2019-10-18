@@ -1,0 +1,45 @@
+---
+
+- name: serives > CouchDB service restart
+  block:
+    - name: CouchDB service in CentOS 6
+      service:
+        name: couchdb
+        state: restarted
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version == "6"
+
+    - name: CouchDB service in CentOS 7
+      systemd:
+        name: couchdb
+        state: restarted
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version == "7"
+
+  when: >
+    couchdb_vm_conf    is defined and couchdb_vm_conf    is changed or
+    couchdb_bind_conf  is defined and couchdb_bind_conf  is changed or
+    couchdb_users_conf is defined and couchdb_users_conf is changed
+
+- name: services > Ensure CouchDB service is running
+  block:
+    - name: CouchDB service in CentOS 6
+      service:
+        name: couchdb
+        state: started
+        enabled: true
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version == "6"
+
+    - name: CouchDB service in CentOS 7
+      systemd:
+        name: couchdb
+        state: started
+        enabled: true
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version == "7"
+

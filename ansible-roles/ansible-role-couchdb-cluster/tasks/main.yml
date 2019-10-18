@@ -1,0 +1,11 @@
+---
+
+- name: CouchDB enable cluster
+  include_tasks: enable.yml
+
+- name: CouchDB add node
+  include_tasks: node.yml
+
+- name: CouchDB finish
+  include_tasks: finish.yml
+

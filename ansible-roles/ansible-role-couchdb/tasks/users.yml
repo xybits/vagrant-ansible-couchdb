@@ -1,0 +1,23 @@
+---
+
+- name: users > CouchDB file
+  template:
+    dest: /opt/couchdb/etc/local.d/users.ini
+    src: users.ini.j2
+    force: no
+    group: couchdb
+    owner: couchdb
+    mode: 0755
+
+- name: users > CouchDB admin
+  lineinfile:
+    path: /opt/couchdb/etc/local.d/users.ini
+    regexp: '^{{ couchdb_admin.user }}'
+    insertafter: '^[admins]'
+    line: >-
+      {{ couchdb_admin.user }} = {{
+        ( couchdb_admin.pass | default( couchdb_admin.user ))
+        | couchdb_encrypt_password( couchdb_admin.user | hash( 'sha1' ))
+      }}
+  register: couchdb_users_conf
+

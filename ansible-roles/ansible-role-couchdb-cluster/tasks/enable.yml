@@ -1,0 +1,19 @@
+---
+
+- name: cluster > Cluster enabled
+  uri:
+    url: "http://{{ inventory_hostname }}:5984/_cluster_setup"
+    method: POST
+    body_format: json
+    body: "{{ lookup( 'template', 'enable_cluster.json.j2' ) }}"
+    headers:
+      Content-Type: "application/json"
+    force_basic_auth: true
+    user: "{{ couchdb_admin.user }}"
+    password: "{{ couchdb_admin.pass | default( couchdb_admin.user ) }}"
+    status_code: [200, 400]
+    changed_when: status_code == 200
+  vars:
+    couchdb_node_bind_address: "{{ inventory_hostname }}"
+    couchdb_node_count: "{{ couchdb_cluster_nodes | length }}"
+

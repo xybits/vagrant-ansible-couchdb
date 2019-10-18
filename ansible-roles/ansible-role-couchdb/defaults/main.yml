@@ -1,0 +1,21 @@
+---
+
+couchdb_packages:
+  - couchdb
+
+# - CouchDB VM Args -
+couchdb_node_name_prefix: couchdb
+couchdb_cookie: C0uchd815aW3s0M3
+
+# - CouchDB Configurations -
+couchdb_cluster_discovery_port: 4369
+couchdb_cluster_port: 9100
+
+couchdb_uuid: ~
+couchdb_httpd_auth_secret: ~
+
+# - CouchDB Admin -
+couchdb_admin:
+  user: admin
+  pass: ~
+

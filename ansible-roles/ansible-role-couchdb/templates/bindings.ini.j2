@@ -1,0 +1,15 @@
+
+[couchdb]
+uuid = {{ couchdb_uuid | default( "" ) }}
+
+[chttpd]
+port = 5984
+bind_address = {{ inventory_hostname }}
+
+[httpd]
+port = 5986
+bind_address = {{ inventory_hostname }}
+
+[couch_httpd_auth]
+secret = {{ couchdb_httpd_auth_secret | default( "" ) }}
+

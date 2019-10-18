@@ -1,7 +1,7 @@
 
-# vagrant-multiservers
+# vagrant-ansible-couchdb
 
-Example of multiple servers orchestration with Vagrant, Ansible and Puppet
+Example of CouchDB replication with three servers.
 
 
 ## Prerequisites:
@@ -10,6 +10,7 @@ Download and install the following tools:
 
 - [VirtualBox & Extension Pack](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) 2.8+
 
 ## Running the code
 
@@ -17,18 +18,12 @@ Download and install the following tools:
   ```bash
   -:$ vagrant status
   ```
-- Instantiate the servers:
+- Instantiate servers:
    ```bash
-   -:$ vagrant up server1 server2
+   -:$ vagrant up --provision couchdb01 couchdb02 couchdb03
    ```
-- Verify the instances:
-   ```bash
-   -:$ vagrant ssh server1 -- "hostname && hostname -I"
-   -:$ vagrant ssh server2 -- "hostname && hostname -I"
-   ```
-- Test communication between servers:
-   ```bash
-   -:$ vagrant ssh server1 -- "ping -c 4 10.233.89.102"
-   -:$ vagrant ssh server2 -- "ping -c 4 10.233.89.101"
-   ```
+- Connect to a server
+  - Point browser to: http://<couchdb0[1|2|3]>:5894/_utils/
+  - Use admin username/password to login
+  - Browse to: http://<couchdb0[1|2|3]>:5894/_membership
 

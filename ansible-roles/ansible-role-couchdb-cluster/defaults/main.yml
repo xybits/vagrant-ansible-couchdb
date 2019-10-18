@@ -1,0 +1,9 @@
+---
+
+# - CouchDB Admin -
+couchdb_node_admin: ~
+
+# - CouchDB Cluster -
+couchdb_coordination_node: ~
+couchdb_cluster_nodes: []
+

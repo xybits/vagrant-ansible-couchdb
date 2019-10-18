@@ -1,0 +1,20 @@
+---
+
+- name: config > CouchDB vm args
+  template:
+    dest: /opt/couchdb/etc/vm.args
+    src: vm.args.j2
+    group: couchdb
+    owner: couchdb
+    mode: 0755
+  register: couchdb_vm_conf
+
+- name: config > CouchDB port and address bindings
+  template:
+    dest: /opt/couchdb/etc/local.d/bindings.ini
+    src: bindings.ini.j2
+    group: couchdb
+    owner: couchdb
+    mode: 0755
+  register: couchdb_bind_conf
+

@@ -1,0 +1,8 @@
+---
+
+- name: startup > CouchDB system databases
+  include_tasks: system_databases.yml
+  with_items: [ _users, _replicator, _global_changes ]
+  loop_control:
+    loop_var: couchdb_sysdb
+

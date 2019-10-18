@@ -1,0 +1,20 @@
+---
+
+- name: cluster > Cluster completed
+  uri:
+    url: "http://{{ inventory_hostname }}:5984/_cluster_setup"
+    method: POST
+    body_format: json
+    body: >
+      { "action" : "finish_cluster" }
+    headers:
+      Content-Type: "application/json"
+    force_basic_auth: true
+    user: "{{ couchdb_admin.user }}"
+    password: "{{ couchdb_admin.pass | default( couchdb_admin.user ) }}"
+    status_code: [201, 400]
+    changed_when: status_code == 201
+  when:
+    - couchdb_coordination_node is defined
+    - couchdb_coordination_node == inventory_hostname
+

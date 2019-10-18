@@ -1,0 +1,14 @@
+{
+    "action"       :  "enable_cluster"
+  , "username"     :  "{{ couchdb_admin.user }}"
+  , "password"     :  "{{ couchdb_admin.pass | default( couchdb_admin.user ) }}"
+  , "bind_address" :  "{{ couchdb_node_bind_address }}"
+  , "port"         :  5984
+  , "node_count"   :  {{ couchdb_node_count }}
+  , "singlenode"   :  false
+  {% if couchdb_node_remote_host is defined and inventory_hostname != couchdb_node_remote_host %}
+  , "remote_node"  : "{{ couchdb_node_remote_host }}"
+  , "remote_current_user"     : "{{ couchdb_admin.user }}"
+  , "remote_current_password" : "{{ couchdb_admin.pass | default( couchdb_admin.user ) }}"
+  {% endif %}
+}
